@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOG IN</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    background: #000;
+}
+#bgVideo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    filter: contrast(1.2) saturate(1.2) brightness(1.05);
+}
+.container {
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(4px);
+    padding: 40px;
+    border-radius: 20px;
+    width: 350px;
+    text-align: center;
+    color: white;
+    transition: all 0.3s ease;
+}
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-sizing: border-box; 
+}
+.password-wrapper {
+    position: relative;
+    width: 100%; 
+    margin: 10px 0;
+}
+.password-wrapper input {
+    width: 100%; 
+    margin: 0; 
+    box-sizing: border-box;
+}
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #08f6ff;
+    font-weight: bold;
+}
+button {
+    width: 95%;
+    padding: 12px;
+    margin-top: 15px;
+    background-color: rgb(22, 255, 22);
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    color: black;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: rgb(160, 176, 39);
+}
+.main-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+#loadingOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    display: none;
+    z-index: 999;
+    flex-direction: column;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}
+.spinner {
+    border: 6px solid rgba(255,255,255,0.3);
+    border-top: 6px solid #08f6ff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<video autoplay muted loop id="bgVideo">
+    <source src="LoginVideo.mp4" type="video/mp4">
+</video>
+
+<header style="position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; padding: 20px; z-index: 10;">
+    <img src="ics.jpg" style="width: 150px; height: 150px; border-radius: 55%; object-fit: cover; margin-left: 20px;">
+    <img src="tcgc.jpg" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-right: 50px;">
+</header>
+
+<div class="main-wrapper">
+    <div class="container" style="margin-top: 180px;">
+        <div style="font-size: xx-large;"><b>LOG IN</b></div>
+
+        <form id="loginForm">
+            <input type="text" placeholder="Email" id="email" required>
+            
+            <div class="password-wrapper">
+                <input type="password" placeholder="Password" id="password" required>
+                <span class="toggle-password" onclick="togglePassword()">Show</span>
+            </div>
+
+            <button type="submit">LOGIN</button>
+        </form>
+    </div>
+</div>
+
+<div id="loadingOverlay">
+    <div class="spinner"></div>
+    Logging in...
+</div>
+
+<script>
+// Password toggle
+function togglePassword() {
+    const passwordInput = document.getElementById('password');
+    const toggle = document.querySelector('.toggle-password');
+    if(passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggle.innerText = 'Hide';
+    } else {
+        passwordInput.type = 'password';
+        toggle.innerText = 'Show';
+    }
+}
+
+// Fixed login credentials
+const validEmail = "VinceAranas";
+const validPassword = "123456";
+
+// Login form submission
+document.getElementById('loginForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if(email === validEmail && password === validPassword){
+        document.getElementById('loadingOverlay').style.display = 'flex';
+        setTimeout(() => {
+            window.location.href = "2ndPage.html";
+        }, 1500);
+    } else {
+        alert("Invalid credentials! Please try again.");
+    }
+});
+
+</script>
+
+</body>
+</html>
